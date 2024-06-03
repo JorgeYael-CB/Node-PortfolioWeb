@@ -15,10 +15,9 @@ export class Server {
     private readonly app = express();
 
 
-    constructor(
-        envs: Props,
-    ){
+    constructor( envs: Props ){
         const { port, routes } = envs;
+
         this.routes = routes;
         this.port = port;
 
