@@ -22,7 +22,7 @@ export class ContactRoutes {
 
 
         // Manejamos las rutas
-        routes.get('/by-email', controller.contactByEmail);
+        routes.post('/by-email', controller.contactByEmail);
 
 
         return routes;
