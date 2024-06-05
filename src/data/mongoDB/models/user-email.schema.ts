@@ -42,4 +42,4 @@ const userEmailSchema = new Schema({
 })
 
 
-export const UserEmail = mongoose.model('UserEmail', userEmailSchema);
+export const UserEmailModel = mongoose.model('UserEmail', userEmailSchema);
