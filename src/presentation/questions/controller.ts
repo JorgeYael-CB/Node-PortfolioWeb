@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import { ValidateDataDto } from "../../domain/dtos/questions";
+import { Request, Response } from "express"
+import { ValidateDataDto } from "../../domain/dtos/users";
 
 
 export class QuestionsController {
