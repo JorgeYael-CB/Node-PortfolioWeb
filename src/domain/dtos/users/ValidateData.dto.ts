@@ -1,5 +1,6 @@
 import { ValidateUserData } from "../../../config";
 
+
 export class ValidateDataDto {
 
     constructor(

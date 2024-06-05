@@ -1,1 +1,2 @@
-export * from './ValidateData.dto';
+export * from './AddQuestion.dto';
+export * from './getQuesionBy.dto'

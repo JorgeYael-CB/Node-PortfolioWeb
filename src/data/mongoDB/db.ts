@@ -9,9 +9,9 @@ export class MongoDb {
   ){}
 
 
-  connect() {
+  async connect() {
     try {
-      mongoose.connect(this.dbUri);
+      await mongoose.connect(this.dbUri);
     } catch (error) {
       console.log(error);
     }

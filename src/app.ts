@@ -13,7 +13,7 @@ import { Server } from "./presentation/server";
 async function main() {
     // Connection a la base de datos
     try {
-        new MongoDb( envs.DB_URL_PORTFOLIO )
+        await new MongoDb( envs.DB_URL_PORTFOLIO )
             .connect();
 
         console.log('DB Connected');
