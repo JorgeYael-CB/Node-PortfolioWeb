@@ -1,6 +1,7 @@
+import { isValidObjectId } from "mongoose";
 import { UserEmailModel } from "../../../data";
 import { UsersEmailsDatasource } from "../../../domain/datasources";
-import { ValidateDataDto, GetUserBy } from "../../../domain/dtos/users";
+import { ValidateDataDto, GetUserByDto } from "../../../domain/dtos/users";
 import { UserEmailEntity } from "../../../domain/entities";
 import { CustomError } from "../../../domain/errors";
 import { UserEmailMapper } from "../../mappers";
@@ -9,8 +10,35 @@ import { UserEmailMapper } from "../../mappers";
 
 export class UserEmailMongoDatasourceImpl implements UsersEmailsDatasource {
 
-    constructor(){};
+    constructor(){}
 
+
+    private async getUser( getUserByDto:GetUserByDto ) {
+        const { email, id } = getUserByDto;
+
+        if( id && !isValidObjectId( id ) ){
+            throw CustomError.BadRequestException(`id is not valid`);
+        }
+
+        const user = (email)
+            ? await UserEmailModel.findOne({email})
+            : await UserEmailModel.findById(id);
+
+        if( !user ) throw CustomError.BadRequestException(`User not found!`);
+
+        return user;
+    };
+
+    async VerifyEmail(getUserByDto: GetUserByDto): Promise<UserEmailEntity> {
+        const user = await this.getUser( getUserByDto );
+
+        if( !user.verify ){
+            user.verify = true;
+            await user.save();
+        };
+
+        return UserEmailMapper.getInstanceFromObj( user );
+    };
 
     async AddRegisterEmail(validateDataDto: ValidateDataDto): Promise<UserEmailEntity> {
         const { email } = validateDataDto;
@@ -30,13 +58,8 @@ export class UserEmailMongoDatasourceImpl implements UsersEmailsDatasource {
         return UserEmailMapper.getInstanceFromObj( user );
     }
 
-    async getUserBy(getUserBy: GetUserBy): Promise<UserEmailEntity> {
-        const { email, id } = getUserBy;
-        const user = email
-            ? await UserEmailModel.findOne({email})
-            : await UserEmailModel.findById(id);
-
-        if( !user ) throw CustomError.BadRequestException(`User not found!`);
+    async getUserBy(getUserByDto: GetUserByDto): Promise<UserEmailEntity> {
+        const user = await this.getUser( getUserByDto );
 
         return UserEmailMapper.getInstanceFromObj( user );
     }

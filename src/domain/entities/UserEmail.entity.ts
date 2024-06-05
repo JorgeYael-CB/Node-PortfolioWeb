@@ -3,11 +3,11 @@ export class UserEmailEntity {
   constructor(
     public readonly email:string,
     public readonly id:string | number,
-    public readonly verify: boolean,
-    public readonly isActive: boolean,
+    public verify: boolean,
+    public isActive: boolean,
     public readonly date: Date,
-    public readonly roles: string[],
-    public readonly questions: any[],
+    public roles: string[],
+    public questions: any[],
   ){};
 
 }
