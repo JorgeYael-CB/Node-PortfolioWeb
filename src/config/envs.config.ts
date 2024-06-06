@@ -8,4 +8,5 @@ export const envs = {
   MAILER_USER: get('MAILER_USER').required().asString(),
   MAILER_ADMINS: get('MAILER_ADMINS').required().asArray(),
   DB_URL_PORTFOLIO: get('DB_URL_PORTFOLIO').required().asString(),
+  JWT_SEED: get('JWT_SEED').required().asString(),
 }
