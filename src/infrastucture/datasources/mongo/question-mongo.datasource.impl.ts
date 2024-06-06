@@ -59,12 +59,12 @@ export class QuestionMongoDatasourceImpl implements QuestionDatasource {
 
     async allQuestions(): Promise<QuestionEntity[]> {
         const questions = await QuestionModel.find({});
+
         const questionsAsync: Promise<QuestionEntity>[] = [];
 
         questions.forEach(question => {
             questionsAsync.push(this.getQuestionPopulate(question._id));
-        });
-
+            });
         const populatedQuestions = await Promise.all(questionsAsync);
         return populatedQuestions;
     }
