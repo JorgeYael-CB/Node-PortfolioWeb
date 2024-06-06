@@ -13,8 +13,21 @@ export class UserEmailMongoDatasourceImpl implements UsersEmailsDatasource {
     constructor(){}
 
 
-    addQuestionId(questionId: any): Promise<UserEmailEntity> {
-        throw new Error("Method not implemented.");
+    private async getQuestionFromUser( userId:any ) {
+        const user = await (await this.getUser( new GetUserByDto( undefined, userId ) )).populate('questions');
+
+        return UserEmailMapper.getInstanceFromObj( user );
+    };
+
+    async addQuestionId(questionId: any, userId:any): Promise<UserEmailEntity> {
+        if( !isValidObjectId( questionId ) ) throw CustomError.BadRequestException(`Id is not valid`);
+
+        const user = await this.getUser( new GetUserByDto(undefined, userId) );
+
+        user.questions.push(questionId);
+        await user.save();
+
+        return this.getQuestionFromUser( user._id );
     };
 
     private async getUser( getUserByDto:GetUserByDto ) {
@@ -41,7 +54,7 @@ export class UserEmailMongoDatasourceImpl implements UsersEmailsDatasource {
             await user.save();
         };
 
-        return UserEmailMapper.getInstanceFromObj( user );
+        return this.getQuestionFromUser( user._id );
     };
 
     async AddRegisterEmail(validateDataDto: ValidateDataDto): Promise<UserEmailEntity> {
@@ -59,13 +72,13 @@ export class UserEmailMongoDatasourceImpl implements UsersEmailsDatasource {
             });
         };
 
-        return UserEmailMapper.getInstanceFromObj( user );
+        return this.getQuestionFromUser( user._id );
     }
 
     async getUserBy(getUserByDto: GetUserByDto): Promise<UserEmailEntity> {
         const user = await this.getUser( getUserByDto );
 
-        return UserEmailMapper.getInstanceFromObj( user );
+        return this.getQuestionFromUser( user._id );
     }
 
 }

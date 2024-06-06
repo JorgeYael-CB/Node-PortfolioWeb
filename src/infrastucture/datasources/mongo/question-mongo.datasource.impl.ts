@@ -39,7 +39,7 @@ export class QuestionMongoDatasourceImpl implements QuestionDatasource {
     async addQuestion(addQuestionDto: AddQuestionDto): Promise<QuestionEntity> {
         const { question, title, userId } = addQuestionDto;
 
-        await this.getUserEmailById( userId.toString() );
+        const user = await this.getUserEmailById( userId.toString() );
 
         const newQuestion = await QuestionModel.create({
             answers: [],
@@ -49,6 +49,7 @@ export class QuestionMongoDatasourceImpl implements QuestionDatasource {
             user: userId,
         });
 
+        await this.usersEmailRpository.addQuestionId( newQuestion._id, user.id );
         return QuestionMapper.getQuestionFromObj( await this.getQuestionPopulate( newQuestion._id ) );
     }
 

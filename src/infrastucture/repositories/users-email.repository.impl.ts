@@ -11,8 +11,8 @@ export class UsersEmailRepositoryImpl implements UsersEmailsRepository {
     ){}
 
 
-    addQuestionId(questionId: any): Promise<UserEmailEntity> {
-        return this.usersEmailDatasource.addQuestionId( questionId );
+    addQuestionId(questionId: any, userId:any): Promise<UserEmailEntity> {
+        return this.usersEmailDatasource.addQuestionId( questionId, userId );
     }
 
     VerifyEmail(getUserByDto: GetUserByDto): Promise<UserEmailEntity> {
