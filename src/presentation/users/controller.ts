@@ -4,7 +4,7 @@ import { AddUserEmailUseCase, VerifyEmailUseCase } from "../../domain/use-cases/
 import { GetUserByDto, ValidateDataDto } from "../../domain/dtos/users";
 import { HandleErrorUsecase } from "../../domain/use-cases/errors";
 import { GetUserByUseCase } from "../../domain/use-cases/users/get-user.use-case";
-import { JwtAdapter } from "../../config";
+import { JwtAdapter, MailerAdapter } from "../../config";
 
 
 export class UsersController {
@@ -12,6 +12,7 @@ export class UsersController {
   constructor(
     private readonly userEmailRepository: UsersEmailsRepository,
     private readonly jwtAdapter: JwtAdapter,
+    private readonly mailerAdapter:MailerAdapter,
   ){};
 
 
@@ -19,7 +20,7 @@ export class UsersController {
     const [messageError, validateDataDto] = ValidateDataDto.create(req.body);
     if( messageError ) return res.status(400).json({error:true, messageError, succes: false});
 
-    const useCase = new AddUserEmailUseCase( this.userEmailRepository );
+    const useCase = new AddUserEmailUseCase( this.userEmailRepository, this.mailerAdapter );
     useCase.add( validateDataDto! )
       .then( data => res.status(201).json(data) )
       .catch( err => HandleErrorUsecase.handleError( err, res ) );

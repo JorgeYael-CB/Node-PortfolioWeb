@@ -8,6 +8,7 @@ export class UserEmailEntity {
     public readonly date: Date,
     public roles: string[],
     public questions: any[],
+    public readonly name:string
   ){};
 
 }

@@ -58,7 +58,7 @@ export class UserEmailMongoDatasourceImpl implements UsersEmailsDatasource {
     };
 
     async AddRegisterEmail(validateDataDto: ValidateDataDto): Promise<UserEmailEntity> {
-        const { email } = validateDataDto;
+        const { email, name } = validateDataDto;
         let user = await UserEmailModel.findOne( {email} );
 
         if( !user ){
@@ -69,6 +69,7 @@ export class UserEmailMongoDatasourceImpl implements UsersEmailsDatasource {
                 questions: [],
                 roles: ['USER'],
                 verify: false,
+                name,
             });
         };
 

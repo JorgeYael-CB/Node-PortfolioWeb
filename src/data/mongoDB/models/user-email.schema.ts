@@ -9,6 +9,11 @@ const userEmailSchema = new Schema({
     unique: true,
   },
 
+  name: {
+    type: String,
+    required: true,
+  },
+
   verify: {
     type: Boolean,
     default: false,
