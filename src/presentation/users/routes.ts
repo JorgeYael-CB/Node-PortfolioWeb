@@ -17,6 +17,7 @@ export class UsersRoutes{
 
 
     routes.post('/add-email', controller.addUserEmail);
+    routes.get('/get-user', controller.getUserBy);
     routes.patch('/verify-email', controller.verifyEmail);
 
 

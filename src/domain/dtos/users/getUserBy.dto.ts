@@ -12,7 +12,7 @@ export class GetUserByDto {
         const { id, email } = body;
 
         if( !id && !email )
-            return ['expected id or email'];
+            return ['expected id or email in params'];
 
         const [errEmail, emailMapper] = (email)
             ? ValidateUserData.email( email )
