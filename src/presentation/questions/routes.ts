@@ -23,6 +23,7 @@ export class QuestionRoutes {
 
         routes.post('/validate-data', controller.validateData);
         routes.post('/add-question', controller.addQuestion);
+        routes.get('/all-questions', controller.getAllQuestions);
 
 
         return routes;

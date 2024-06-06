@@ -21,7 +21,7 @@ export class QuestionMongoDatasourceImpl implements QuestionDatasource {
         return await this.usersEmailRpository.getUserBy( new GetUserByDto( undefined, userId ) );
     }
 
-    private async getQuestionPopulate( questionId: any ) {
+    private async getQuestionPopulate( questionId: any ):Promise< QuestionEntity > {
         if( !isValidObjectId( questionId )) throw CustomError.BadRequestException(`ID is not valid`);
 
         const question = await QuestionModel.findById( questionId ).populate('user', {
@@ -33,7 +33,7 @@ export class QuestionMongoDatasourceImpl implements QuestionDatasource {
         });
         if( !question ) throw CustomError.BadRequestException(`Question not found`);
 
-        return question;
+        return QuestionMapper.getQuestionFromObj( question );
     };
 
     async addQuestion(addQuestionDto: AddQuestionDto): Promise<QuestionEntity> {
@@ -57,7 +57,15 @@ export class QuestionMongoDatasourceImpl implements QuestionDatasource {
         throw new Error("Method not implemented.");
     }
 
-    allQuestions(): Promise<QuestionEntity[]> {
-        throw new Error("Method not implemented.");
+    async allQuestions(): Promise<QuestionEntity[]> {
+        const questions = await QuestionModel.find({});
+        const questionsAsync: Promise<QuestionEntity>[] = [];
+
+        questions.forEach(question => {
+            questionsAsync.push(this.getQuestionPopulate(question._id));
+        });
+
+        const populatedQuestions = await Promise.all(questionsAsync);
+        return populatedQuestions;
     }
 }

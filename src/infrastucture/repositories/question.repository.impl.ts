@@ -21,7 +21,7 @@ export class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     allQuestions(): Promise<QuestionEntity[]> {
-        return this.allQuestions();
+        return this.questionDatasource.allQuestions();
     }
 
 }
