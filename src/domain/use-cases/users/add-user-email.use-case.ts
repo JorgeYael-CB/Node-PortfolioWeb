@@ -1,4 +1,4 @@
-import { JwtAdapter, MailerAdapter, RandomNumberAdapter } from "../../../config";
+import { MailerAdapter, RandomNumberAdapter } from "../../../config";
 import { ValidateDataDto } from "../../dtos/users";
 import { CustomError } from "../../errors";
 import { UsersEmailsRepository } from '../../repository/users-emails.repository';
@@ -26,11 +26,15 @@ export class AddUserEmailUseCase {
       to: user.email,
       subject: 'Verify your account',
       html: `
-        <h1>Welcome <strong>${ user.name }</strong> to DevComplete Studios</h1>
-        <p> Verification code: <strong>${ codeVerify }</strong> </p>
-        <p> If you are not logged in, you can ignore this message. </p>
+        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; padding: 20px;">
+          <h1 style="color: #4CAF50; text-align: center;">DevComplete Studios</h1>
+          <p>Hi, <strong>${user.name}</strong>,</p>
+          <p>Your verification code is:</p>
+          <p style="font-size: 20px; font-weight: bold; color: #ff5722;">${codeVerify}</p>
+          <p>If you are not logged in, you can ignore this message.</p>
+        </div>
       `
-    })
+    });
 
     return {
       user,
