@@ -7,5 +7,6 @@ export abstract class UsersEmailsDatasource {
   abstract AddRegisterEmail( validateDataDto:ValidateDataDto ): Promise< UserEmailEntity >;
   abstract getUserBy( GetUserByDto:GetUserByDto ):Promise< UserEmailEntity >;
   abstract VerifyEmail( GetUserByDto:GetUserByDto ):Promise< UserEmailEntity >;
+  abstract addQuestionId( questionId: any ): Promise< UserEmailEntity >;
 
 };

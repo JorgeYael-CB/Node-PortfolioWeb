@@ -13,6 +13,10 @@ export class UserEmailMongoDatasourceImpl implements UsersEmailsDatasource {
     constructor(){}
 
 
+    addQuestionId(questionId: any): Promise<UserEmailEntity> {
+        throw new Error("Method not implemented.");
+    };
+
     private async getUser( getUserByDto:GetUserByDto ) {
         const { email, id } = getUserByDto;
 

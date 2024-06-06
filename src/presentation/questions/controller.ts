@@ -1,10 +1,17 @@
 import { Request, Response } from "express"
 import { ValidateDataDto } from "../../domain/dtos/users";
+import { QuestionRepository } from "../../domain/repository";
+import { AddQuestionDto } from "../../domain/dtos/questions";
+import { AddQuestionUseCase } from "../../domain/use-cases/question";
+import { HandleErrorUsecase } from "../../domain/use-cases/errors";
+
 
 
 export class QuestionsController {
 
-    constructor(){};
+    constructor(
+        private readonly questionRepository: QuestionRepository,
+    ){};
 
 
     validateData = ( req:Request, res:Response ) => {
@@ -15,7 +22,14 @@ export class QuestionsController {
     };
 
 
-    addQuestion = ( res:Response, req:Request ) => {
+    addQuestion = ( req:Request, res:Response ) => {
+        const [ messageError, addQuestionDto ] = AddQuestionDto.create( req.body );
+        if( messageError ) return res.status(400).json({error: true, succes: false, messageError});
 
+
+        new AddQuestionUseCase( this.questionRepository )
+            .add( addQuestionDto! )
+                .then( data => res.status(201).json(data) )
+                .catch( err => HandleErrorUsecase.handleError( err, res ) );
     };
 };

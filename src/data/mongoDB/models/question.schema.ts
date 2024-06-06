@@ -24,7 +24,7 @@ const QuestionSchema = new Schema({
     required: true,
   },
 
-  answer: {
+  answers: {
     type: [
       {
         type: Schema.Types.ObjectId,
@@ -37,4 +37,4 @@ const QuestionSchema = new Schema({
 })
 
 
-export const UserEmail = mongoose.model('Question', QuestionSchema);
+export const QuestionModel = mongoose.model('Question', QuestionSchema);

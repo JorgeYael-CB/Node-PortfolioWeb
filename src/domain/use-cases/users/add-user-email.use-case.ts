@@ -1,4 +1,4 @@
-import { RandomNumberAdapter } from "../../../config";
+import { JwtAdapter, RandomNumberAdapter } from "../../../config";
 import { ValidateDataDto } from "../../dtos/users";
 import { CustomError } from "../../errors";
 import { UsersEmailsRepository } from '../../repository/users-emails.repository';
