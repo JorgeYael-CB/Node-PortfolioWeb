@@ -36,9 +36,6 @@ export class PaginationDto {
     if( limit < 0  || page < 0)
       throw CustomError.BadRequestException(`limit and page they must be positive numbers`);
 
-    if( limit > numberElements )
-      throw CustomError.BadRequestException(`There are not enough elements in the array: limit "${limit}" - all_elements: ${ numberElements }.`);
-
     const pagination = page * limit;
     const maxPage = Math.round( numberElements / limit );
     const minPage = 0;

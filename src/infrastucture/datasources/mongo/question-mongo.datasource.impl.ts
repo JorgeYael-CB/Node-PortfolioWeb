@@ -30,6 +30,7 @@ export class QuestionMongoDatasourceImpl implements QuestionDatasource {
             isActive: 1,
             date: 1,
             roles: 1,
+            name: 1,
         });
         if( !question ) throw CustomError.BadRequestException(`Question not found`);
 
