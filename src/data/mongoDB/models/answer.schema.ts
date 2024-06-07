@@ -25,7 +25,6 @@ const AnswerSchema = new Schema({
     required: false,
   },
 
-
 })
 
 

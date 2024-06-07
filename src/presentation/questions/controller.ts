@@ -35,7 +35,7 @@ export class QuestionsController {
     getAllQuestions = ( req:Request, res:Response ) => {
 
         new GetAllQuestionsUseCase( this.questionRepository )
-            .getAll()
+            .getAll( req.query )
                 .then( data => res.status(200).json(data) )
                 .catch( err => HandleErrorUsecase.handleError( err, res ) );
     }
