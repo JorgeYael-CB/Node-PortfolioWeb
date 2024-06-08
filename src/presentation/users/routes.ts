@@ -28,6 +28,8 @@ export class UsersRoutes{
 
     routes.get('/get-user', controller.getUserBy);
 
+    routes.get('/verify-jwt', [authMiddleware.validateJwt], controller.verifyJwtPayload);
+
     routes.post('/add-email', controller.addUserEmail);
     routes.patch('/verify-email', authMiddleware.validateJwt, controller.verifyEmail);
 

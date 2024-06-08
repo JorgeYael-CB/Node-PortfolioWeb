@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 import { UsersEmailsRepository } from "../../domain/repository";
-import { AddUserEmailUseCase, VerifyEmailUseCase } from "../../domain/use-cases/users";
+import { AddUserEmailUseCase, VerifyEmailUseCase, GetUserByUseCase, VerifyTokenPayloadUseCase } from "../../domain/use-cases/users";
 import { GetUserByDto, ValidateDataDto } from "../../domain/dtos/users";
 import { HandleErrorUsecase } from "../../domain/use-cases/errors";
-import { GetUserByUseCase } from "../../domain/use-cases/users/get-user.use-case";
 import { JwtAdapter, MailerAdapter } from "../../config";
 
 
@@ -43,6 +42,15 @@ export class UsersController {
 
     new VerifyEmailUseCase( this.userEmailRepository, this.jwtAdapter )
       .verify( getUserByDto! )
+        .then( data => res.status(200).json(data) )
+        .catch( err => HandleErrorUsecase.handleError( err, res ) );
+  };
+
+  verifyJwtPayload = ( req:Request, res:Response ) => {
+    const { userId } = req.body;
+
+    new VerifyTokenPayloadUseCase(this.userEmailRepository)
+      .check( userId )
         .then( data => res.status(200).json(data) )
         .catch( err => HandleErrorUsecase.handleError( err, res ) );
   };
