@@ -6,6 +6,7 @@ import { UserEmailEntity } from "./UserEmail.entity";
 export class AnswerEntity{
 
   constructor(
+    public readonly id:string | number,
     public readonly answer:string,
     public readonly date:Date,
     public readonly user:UserEmailEntity,

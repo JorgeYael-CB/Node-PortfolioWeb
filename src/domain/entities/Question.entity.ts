@@ -1,4 +1,7 @@
 import { AnswerEntity } from "./Answer.entity";
+import { UserEmailEntity } from "./UserEmail.entity";
+
+
 
 export class QuestionEntity {
 
@@ -7,7 +10,7 @@ export class QuestionEntity {
     public id:string | number,
     public question:string,
     public date: Date,
-    public user:any,
+    public user:UserEmailEntity,
     public answers: AnswerEntity[],
   ){};
 
