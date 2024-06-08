@@ -32,8 +32,8 @@ export class PaginationDto {
 
     moreRecent = !!moreRecent;
     array = moreRecent? array.reverse() : array;
-    limit = +limit;
-    page = +page;
+    limit = Math.max(1, Math.floor(limit));
+    page = Math.max(0, Math.floor(page));
 
     const numberElements = array.length;
 
