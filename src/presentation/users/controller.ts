@@ -20,7 +20,7 @@ export class UsersController {
     const [messageError, validateDataDto] = ValidateDataDto.create(req.body);
     if( messageError ) return res.status(400).json({error:true, messageError, succes: false});
 
-    const useCase = new AddUserEmailUseCase( this.userEmailRepository, this.mailerAdapter );
+    const useCase = new AddUserEmailUseCase( this.userEmailRepository, this.mailerAdapter, this.jwtAdapter );
     useCase.add( validateDataDto! )
       .then( data => res.status(201).json(data) )
       .catch( err => HandleErrorUsecase.handleError( err, res ) );

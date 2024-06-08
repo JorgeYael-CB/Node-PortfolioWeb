@@ -1,4 +1,4 @@
-import { MailerAdapter, RandomNumberAdapter } from "../../../config";
+import { JwtAdapter, MailerAdapter, RandomNumberAdapter } from "../../../config";
 import { ValidateDataDto } from "../../dtos/users";
 import { CustomError } from "../../errors";
 import { UsersEmailsRepository } from '../../repository/users-emails.repository';
@@ -9,6 +9,7 @@ export class AddUserEmailUseCase {
   constructor(
     private readonly usersEmailsRepository: UsersEmailsRepository,
     private readonly mailerAdapter:MailerAdapter,
+    private readonly jwtAdapter:JwtAdapter,
     private readonly randomNumber = RandomNumberAdapter.getNumber,
   ){};
 
@@ -20,6 +21,8 @@ export class AddUserEmailUseCase {
     if( !user || !codeVerify ){
       CustomError.InternalServerError(`Oops! an error has occurred, please try again later.`);
     };
+
+    const token = await this.jwtAdapter.getJwt({id: user.id});
 
     // TODO: el envio de emails puede no ser asyncrono
     this.mailerAdapter.send({
@@ -41,6 +44,7 @@ export class AddUserEmailUseCase {
       codeVerify,
       codeRange: codeVerify.length,
       error: false,
+      token,
       messageSucces: 'Already register email!',
     }
 

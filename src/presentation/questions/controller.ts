@@ -21,7 +21,6 @@ export class QuestionsController {
         return res.json( validateDataDto );
     };
 
-
     addQuestion = ( req:Request, res:Response ) => {
         const [ messageError, addQuestionDto ] = AddQuestionDto.create( req.body );
         if( messageError ) return res.status(400).json({error: true, succes: false, messageError});
