@@ -14,7 +14,7 @@ interface Props {
 export class PaginationDto {
 
   constructor(
-    public totelElements: number,
+    public allElementsCount: number,
     public elements: any[],
     public limit: number,
     public page: number,
