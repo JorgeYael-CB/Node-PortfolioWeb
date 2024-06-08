@@ -9,10 +9,10 @@ export class GetUserByDto {
 
 
     static create( body: { [key:string]:any } ):[string?, GetUserByDto?] {
-        const { id, email } = body;
+        const { userId, email } = body;
 
-        if( !id && !email )
-            return ['expected id or email in params'];
+        if( !userId && !email )
+            return ['expected userId or email in params'];
 
         const [errEmail, emailMapper] = (email)
             ? ValidateUserData.email( email )
@@ -20,10 +20,10 @@ export class GetUserByDto {
 
         if( errEmail ) return [errEmail];
 
-        if( id && typeof id !== 'string' && typeof id !== 'number' ){
+        if( userId && typeof userId !== 'string' && typeof userId !== 'number' ){
             return ['Id is not valid!'];
         };
 
-        return[ undefined, new GetUserByDto(emailMapper, id) ];
+        return[ undefined, new GetUserByDto(emailMapper, userId) ];
     };
 }

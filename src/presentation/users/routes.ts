@@ -3,6 +3,7 @@ import { UsersController } from "./controller";
 import { UsersEmailRepositoryImpl } from "../../infrastucture/repositories";
 import { UserEmailMongoDatasourceImpl } from '../../infrastucture/datasources/mongo/user-email.mongo.datasource.impl';
 import { JwtAdapter, MailerAdapter, envs } from "../../config";
+import { ValidateJwtMiddleware } from "../middlewares";
 
 
 
@@ -15,6 +16,8 @@ const mailerAdapter = new MailerAdapter({
   mailerUser: envs.MAILER_USER,
 });
 
+const authMiddleware = new ValidateJwtMiddleware(usersRepository, jwtAdapter);
+
 
 export class UsersRoutes{
 
@@ -23,9 +26,10 @@ export class UsersRoutes{
     const controller = new UsersController( usersRepository, jwtAdapter, mailerAdapter );
 
 
-    routes.post('/add-email', controller.addUserEmail);
     routes.get('/get-user', controller.getUserBy);
-    routes.patch('/verify-email', controller.verifyEmail);
+
+    routes.post('/add-email', controller.addUserEmail);
+    routes.patch('/verify-email', authMiddleware.validateJwt, controller.verifyEmail);
 
 
     return routes;
