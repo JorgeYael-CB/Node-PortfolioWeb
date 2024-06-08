@@ -24,4 +24,11 @@ export class CustomError extends Error {
         return new CustomError(500, 'Internal Server error!');
     };
 
+    static unauthorized( error:string, data?:any ) {
+        // TODO: manejar el error
+        console.log(`${error}/${data}`);
+
+        return new CustomError(401, error);
+    }
+
 }

@@ -39,8 +39,10 @@ export class QuestionMongoDatasourceImpl implements QuestionDatasource {
 
     async addQuestion(addQuestionDto: AddQuestionDto): Promise<QuestionEntity> {
         const { question, title, userId } = addQuestionDto;
-
         const user = await this.getUserEmailById( userId.toString() );
+
+        if( !user.verify ) throw CustomError.BadRequestException(`verify your account.`);
+        if( user.questions.length >= 3  ) throw CustomError.unauthorized(`This account has already exceeded the question limit!`);
 
         const newQuestion = await QuestionModel.create({
             answers: [],
@@ -60,13 +62,15 @@ export class QuestionMongoDatasourceImpl implements QuestionDatasource {
 
     async allQuestions(): Promise<QuestionEntity[]> {
         const questions = await QuestionModel.find({});
-
         const questionsAsync: Promise<QuestionEntity>[] = [];
 
         questions.forEach(question => {
-            questionsAsync.push(this.getQuestionPopulate(question._id));
-            });
+            const populate = this.getQuestionPopulate(question._id);
+            questionsAsync.push(populate);
+        });
         const populatedQuestions = await Promise.all(questionsAsync);
-        return populatedQuestions;
+
+        // Mandamos todos las preguntas que tengan un usuario
+        return populatedQuestions.filter( question => question.user);
     }
 }
