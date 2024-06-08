@@ -1,3 +1,7 @@
+import { QuestionEntity } from "./Question.entity";
+
+
+
 export class UserEmailEntity {
 
   constructor(
@@ -7,7 +11,7 @@ export class UserEmailEntity {
     public isActive: boolean,
     public readonly date: Date,
     public roles: string[],
-    public questions: any[],
+    public questions: QuestionEntity[],
     public readonly name:string
   ){};
 

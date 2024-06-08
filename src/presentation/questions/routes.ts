@@ -26,8 +26,6 @@ export class QuestionRoutes {
         const routes = Router();
         const controller = new QuestionsController( questionRepository );
 
-
-        routes.post('/validate-data', controller.validateData);
         routes.post('/add-question', authMiddleware.validateJwt, controller.addQuestion);
         routes.get('/all-questions', controller.getAllQuestions);
 

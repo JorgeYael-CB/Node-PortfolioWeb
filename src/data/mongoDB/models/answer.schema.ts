@@ -28,4 +28,4 @@ const AnswerSchema = new Schema({
 })
 
 
-export const UserEmail = mongoose.model('Question', AnswerSchema);
+export const UserEmail = mongoose.model('Answer', AnswerSchema);

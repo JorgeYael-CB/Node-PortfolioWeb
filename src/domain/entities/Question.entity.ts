@@ -1,3 +1,5 @@
+import { AnswerEntity } from "./Answer.entity";
+
 export class QuestionEntity {
 
   constructor(
@@ -6,7 +8,7 @@ export class QuestionEntity {
     public question:string,
     public date: Date,
     public user:any,
-    public answers: any[],
+    public answers: AnswerEntity[],
   ){};
 
 }
