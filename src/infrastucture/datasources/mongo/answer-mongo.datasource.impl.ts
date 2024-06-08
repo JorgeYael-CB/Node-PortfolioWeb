@@ -1,5 +1,5 @@
 import { isValidObjectId } from "mongoose";
-import { AnswerModel } from "../../../data";
+import { AnswerModel, QuestionModel, UserEmailModel } from "../../../data";
 import { AnswerDatasource } from "../../../domain/datasources";
 import { AddAnswerDto, GetAnswerByDto, EditAnswerDto } from "../../../domain/dtos/answer";
 import { AnswerEntity } from "../../../domain/entities";
@@ -39,6 +39,11 @@ export class AnswerDatasourceMongoImpl implements AnswerDatasource {
     const { answer, userId, questionId } = addAnswerDto;
     if( !isValidObjectId( userId || !isValidObjectId(questionId) ) ) throw CustomError.BadRequestException(`Id is not valid`);
 
+    const user = await UserEmailModel.findById(userId);
+
+    if( !user ||  !user.roles.includes('ADMIN') ){
+      throw CustomError.BadRequestException(`Currently only admins can add reply.`);
+    }
 
     const newAnswer = await AnswerModel.create({
       answer,
@@ -47,7 +52,19 @@ export class AnswerDatasourceMongoImpl implements AnswerDatasource {
       user: userId
     });
 
-    const populateAnswer = await this.answerPopulate( newAnswer._id );
+    const [populateAnswer, questionSelected] = await Promise.all([
+      this.answerPopulate( newAnswer._id ),
+      QuestionModel.findById( questionId ),
+    ]);
+
+    if( !questionSelected ){
+      await newAnswer.deleteOne();
+      throw CustomError.InternalServerError(`La pregunta a la cual tratas de responder no viene`, {file: __dirname});
+    }
+
+    questionSelected?.answers.push(newAnswer._id);
+    await questionSelected!.save();
+
     return populateAnswer
   }
 
