@@ -20,7 +20,7 @@ export class AddAnswerUseCase{
       html: `
         <h1>Answer to your question at DevComplete Studios.</h1>
         <p>user "${answer.user.name}" answered your question: <strong> ${answer.question.question.slice(0, answer.question.question.length / 2)}...</strong> </p>
-        <p>You can see the following answer on the <a href="https://www.devcompletestudios.com">DevComplete Studios</a> page.</p>
+        <p>You can see the following answer on the <a href="https://devcomplete-studios.com/">DevComplete Studios</a> page.</p>
       `,
       subject: `
         Hi, ${answer.question.user.name}, answer to your question
