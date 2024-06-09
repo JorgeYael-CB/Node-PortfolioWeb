@@ -4,6 +4,7 @@ import { QuestionRepository } from "../../domain/repository";
 import { AddQuestionDto } from "../../domain/dtos/questions";
 import { AddQuestionUseCase, GetAllQuestionsUseCase } from "../../domain/use-cases/question";
 import { HandleErrorUsecase } from "../../domain/use-cases/errors";
+import { MailerAdapter } from "../../config";
 
 
 
@@ -11,13 +12,15 @@ export class QuestionsController {
 
     constructor(
         private readonly questionRepository: QuestionRepository,
+        private readonly mailerAdmins:string[],
+        private readonly mailerAdaper:MailerAdapter,
     ){};
 
     addQuestion = ( req:Request, res:Response ) => {
         const [ messageError, addQuestionDto ] = AddQuestionDto.create( req.body );
         if( messageError ) return res.status(400).json({error: true, succes: false, messageError});
 
-        new AddQuestionUseCase( this.questionRepository )
+        new AddQuestionUseCase( this.questionRepository, this.mailerAdmins, this.mailerAdaper )
             .add( addQuestionDto! )
                 .then( data => res.status(201).json(data) )
                 .catch( err => HandleErrorUsecase.handleError( err, res ) );
