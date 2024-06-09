@@ -1,5 +1,10 @@
 
 
+const manageError = ( error?:string, data?:any ) => {
+    console.log(`${error} / ${ JSON.stringify(data) }`);
+};
+
+
 export class CustomError extends Error {
 
     constructor(
@@ -11,23 +16,17 @@ export class CustomError extends Error {
 
 
     static BadRequestException( error:string, data?: any ){
-        // TODO: manejar errores
-        console.log(`${error} / ${ data }`);
-
+        manageError(error, data);
         return new CustomError(404, error);
     };
 
     static InternalServerError( error:string, data?:any ) {
-        // TODO: manejar errores
-        console.log(`${error} / ${ data }`);
-
+        manageError(error, data);
         return new CustomError(500, 'Internal Server error!');
     };
 
     static unauthorized( error:string, data?:any ) {
-        // TODO: manejar el error
-        console.log(`${error}/${data}`);
-
+        manageError(error, data);
         return new CustomError(401, error);
     }
 

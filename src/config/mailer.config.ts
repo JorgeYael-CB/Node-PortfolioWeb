@@ -6,6 +6,8 @@ interface Props {
     mailerUser: string;
     mailerPass: string;
     mailerHost?:string;
+    mailerPort?:number;
+    secure?:boolean;
 };
 
 interface SendEmail {
@@ -31,12 +33,14 @@ export class MailerAdapter {
 
 
     constructor( config: Props ){
-        const { mailerPass, mailerUser, mailerHost = 'smtp.gmail.com' } = config;
+        const { mailerPass, mailerUser, mailerHost = 'smtp.hostinger.com', mailerPort, secure = true } = config;
 
         this.mailerUser = mailerUser;
 
         this.transporter = createTransport({
             host: mailerHost,
+            secure,
+            port: mailerPort,
             auth: {
                 user: mailerUser,
                 pass: mailerPass,

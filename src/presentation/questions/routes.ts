@@ -20,7 +20,7 @@ const authMiddleware = new ValidateJwtMiddleware(usersEmailsRepositoryImpl, jwtA
 const emailsAdmins = envs.MAILER_ADMINS;
 const mailerAdapter = new MailerAdapter({
     mailerPass: envs.MAILER_PASS,
-    mailerUser: envs.MAILER_USER
+    mailerUser: envs.MAILER_USER,
 })
 
 
