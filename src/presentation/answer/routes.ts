@@ -30,7 +30,11 @@ export class AnswerRoutes{
 
 
     routes.get('/get-answer-by', controller.getAnswerBy);
-    routes.post('/add-answer', [authMiddleware.validateJwt], controller.addAnswer);
+
+    routes.use([authMiddleware.validateJwt]);
+    routes.post('/add-answer', controller.addAnswer);
+    routes.post('/add-like', controller.addLikeAnswer);
+    routes.post('/remove-like', controller.removeLikeAnswer);
 
     return routes;
   }

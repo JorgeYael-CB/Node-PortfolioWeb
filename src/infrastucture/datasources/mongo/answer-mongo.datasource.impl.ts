@@ -12,13 +12,53 @@ export class AnswerDatasourceMongoImpl implements AnswerDatasource {
   constructor(){}
 
 
-  removeLikeAnswer(getAnswerByDto: GetAnswerByDto): Promise<AnswerEntity> {
-    throw new Error("Method not implemented.");
+  private async getAnswerById( id:any ) {
+    if( !isValidObjectId(id) ) throw CustomError.BadRequestException(`id is not valid`);
+    const answer = await AnswerModel.findById(id);
+
+    if( !answer ) throw CustomError.BadRequestException(`answer with id: ${id} not found`);
+
+    return answer;
+  };
+
+  private async getUserEmailById( id:any ) {
+    if( !isValidObjectId(id) ) throw CustomError.BadRequestException(`id is not valid`);
+    const user = await UserEmailModel.findById(id);
+    if( !user ) throw CustomError.BadRequestException(`User with id: ${id} not found`);
+
+    return user;
   }
 
 
-  addLikeAnswer(getAnswerByDto: GetAnswerByDto): Promise<AnswerEntity> {
-    throw new Error("Method not implemented.");
+  async removeLikeAnswer(getAnswerByDto: GetAnswerByDto): Promise<AnswerEntity> {
+    const { answerId, userId } = getAnswerByDto;
+
+    const [answer, user] = await Promise.all([
+      await this.getAnswerById(answerId),
+      await this.getUserEmailById(userId),
+    ])
+
+    answer.likes = answer.likes.filter( id => id.toString().toLowerCase() !== user._id.toString().toLowerCase() );
+    await answer.save();
+
+    return await this.answerPopulate(answer._id);
+  }
+
+
+  async addLikeAnswer(getAnswerByDto: GetAnswerByDto): Promise<AnswerEntity> {
+    const { answerId, userId } = getAnswerByDto;
+
+    const [answer, user] = await Promise.all([
+      await this.getAnswerById(answerId),
+      await this.getUserEmailById(userId),
+    ])
+
+    if( answer.likes.includes(user._id) ) throw CustomError.unauthorized(`User already liked`);
+
+    answer.likes.push( userId );
+    await answer.save();
+
+    return await this.answerPopulate(answer._id);
   };
 
 
@@ -78,20 +118,25 @@ export class AnswerDatasourceMongoImpl implements AnswerDatasource {
     return populateAnswer
   }
 
+
   getAnswerBy(getAnswerByDto: GetAnswerByDto): Promise<AnswerEntity> {
-      throw new Error("Method not implemented.");
+    throw new Error("Method not implemented.");
   }
+
 
   deleteAnswer(getAnswerByDto: GetAnswerByDto): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
+
   editAnswer(editAnswerDto: EditAnswerDto): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
+
   getAllAnswer(): Promise<AnswerEntity[]> {
     throw new Error("Method not implemented.");
   };
+
 
 }
