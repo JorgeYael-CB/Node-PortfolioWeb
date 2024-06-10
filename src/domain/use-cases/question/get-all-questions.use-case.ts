@@ -16,7 +16,7 @@ export class GetAllQuestionsUseCase {
       error: false,
       questionsPagination,
       messageSucces: 'All questions send',
-    }
+    };
   };
 
 }

@@ -12,6 +12,7 @@ export class QuestionEntity {
     public date: Date,
     public user:UserEmailEntity,
     public answers: AnswerEntity[],
+    public likes: UserEmailEntity[],
   ){};
 
 }

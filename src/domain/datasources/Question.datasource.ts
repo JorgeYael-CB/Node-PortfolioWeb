@@ -8,4 +8,5 @@ export abstract class QuestionDatasource {
   abstract getQuestionBy( getQuestionBy: GetQuestionBy ): Promise< QuestionEntity >;
   abstract allQuestions(): Promise< QuestionEntity[] >;
   abstract addLikeQuestion( getQuestionBy:GetQuestionBy ): Promise< QuestionEntity >;
+  abstract removeLikeQuestion( getQuestionBy:GetQuestionBy ): Promise< QuestionEntity >;
 }

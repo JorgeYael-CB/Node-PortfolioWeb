@@ -25,11 +25,16 @@ const QuestionSchema = new Schema({
   },
 
   likes: {
-    type:Number,
-    default: 0,
+    type: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'UserEmail',
+      }
+    ],
+    default:[],
   },
 
-  starts: {
+  stars: {
     type: Number,
     default: 4,
   },

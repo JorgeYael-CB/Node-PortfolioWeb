@@ -30,8 +30,13 @@ export class QuestionRoutes {
         const routes = Router();
         const controller = new QuestionsController( questionRepository, emailsAdmins, mailerAdapter );
 
-        routes.post('/add-question', authMiddleware.validateJwt, controller.addQuestion);
         routes.get('/all-questions', controller.getAllQuestions);
+
+        routes.use([authMiddleware.validateJwt]);
+
+        routes.post('/add-question', controller.addQuestion);
+        routes.post('/add-like', controller.addLikeQuestion);
+        routes.post('/remove-like', controller.removeLikeQuesion);
 
 
         return routes;

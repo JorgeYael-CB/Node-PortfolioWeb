@@ -33,7 +33,7 @@ export class MailerAdapter {
 
 
     constructor( config: Props ){
-        const { mailerPass, mailerUser, mailerHost = 'smtp.hostinger.com', mailerPort, secure = true } = config;
+        const { mailerPass, mailerUser, mailerHost = 'smtp.gmail.com', mailerPort, secure = true } = config;
 
         this.mailerUser = mailerUser;
 

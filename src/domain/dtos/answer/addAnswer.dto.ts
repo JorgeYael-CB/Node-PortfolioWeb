@@ -10,7 +10,7 @@ export class AddAnswerDto {
 
 
   static create( body: { [key:string]:any } ):[string?, AddAnswerDto?] {
-    const { answer, userId, questionId } = body;
+    const { answer, userId, questionId} = body;
 
     if( !answer || !userId || !questionId ) return['Answer, token and questionId is required'];
 

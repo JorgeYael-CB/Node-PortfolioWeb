@@ -12,6 +12,10 @@ export class QuestionRepositoryImpl implements QuestionRepository {
     ){}
 
 
+    removeLikeQuestion(getQuestionBy: GetQuestionBy): Promise<QuestionEntity> {
+        return this.questionDatasource.removeLikeQuestion( getQuestionBy );
+    }
+
     addLikeQuestion(getQuestionBy: GetQuestionBy): Promise<QuestionEntity> {
         return this.questionDatasource.addLikeQuestion( getQuestionBy );
     };
@@ -20,8 +24,8 @@ export class QuestionRepositoryImpl implements QuestionRepository {
         return this.questionDatasource.addQuestion( addQuestionDto );
     }
 
-    getQuestionBy(getQuestionByd: GetQuestionBy): Promise<QuestionEntity> {
-        return this.questionDatasource.getQuestionBy( getQuestionByd );
+    getQuestionBy(getQuestionBy: GetQuestionBy): Promise<QuestionEntity> {
+        return this.questionDatasource.getQuestionBy( getQuestionBy );
     }
 
     allQuestions(): Promise<QuestionEntity[]> {
