@@ -10,5 +10,6 @@ export abstract class AnswerRepository {
   abstract deleteAnswer( getAnswerByDto: GetAnswerByDto ): Promise<void>;
   abstract editAnswer( editAnswerDto: EditAnswerDto ): Promise<void>;
   abstract getAllAnswer():Promise<AnswerEntity[]>;
+  abstract addLikeAnswer( getAnswerByDto: GetAnswerByDto ):Promise< AnswerEntity >;
 
 }

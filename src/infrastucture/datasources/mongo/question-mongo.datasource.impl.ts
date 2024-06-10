@@ -14,8 +14,13 @@ export class QuestionMongoDatasourceImpl implements QuestionDatasource {
 
     constructor(
         private readonly usersEmailRpository: UsersEmailsRepository,
-    ){};
+    ){}
 
+
+
+    addLikeQuestion(getQuestionBy: GetQuestionBy): Promise<QuestionEntity> {
+        throw new Error("Method not implemented.");
+    };
 
     private async getUserEmailById( userId:string ) {
         return await this.usersEmailRpository.getUserBy( new GetUserByDto( undefined, userId ) );

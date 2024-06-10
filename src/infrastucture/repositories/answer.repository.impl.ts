@@ -13,6 +13,10 @@ export class AnswerRepositoryImpl implements AnswerRepository {
   ){}
 
 
+  addLikeAnswer(getAnswerByDto: GetAnswerByDto): Promise<AnswerEntity> {
+    return this.answerDatasource.addLikeAnswer(getAnswerByDto);
+  }
+
   addAnswer(addAnswerDto: AddAnswerDto): Promise<AnswerEntity> {
     return this.answerDatasource.addAnswer( addAnswerDto );
   }

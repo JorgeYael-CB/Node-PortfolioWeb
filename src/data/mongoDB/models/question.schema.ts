@@ -29,6 +29,11 @@ const QuestionSchema = new Schema({
     default: 0,
   },
 
+  starts: {
+    type: Number,
+    default: 4,
+  },
+
   answers: {
     type: [
       {
