@@ -11,6 +11,8 @@ export class AnswerEntity{
     public readonly date:Date,
     public readonly user:UserEmailEntity,
     public readonly question:QuestionEntity,
+    public readonly edited:boolean,
+    public readonly likes:UserEmailEntity[],
   ){}
 
 }

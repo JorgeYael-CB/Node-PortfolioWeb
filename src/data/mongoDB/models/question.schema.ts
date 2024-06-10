@@ -34,6 +34,11 @@ const QuestionSchema = new Schema({
     default:[],
   },
 
+  edited: {
+    type: Boolean,
+    default: false,
+  },
+
   stars: {
     type: Number,
     default: 4,

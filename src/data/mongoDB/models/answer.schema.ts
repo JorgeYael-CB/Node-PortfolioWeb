@@ -13,6 +13,11 @@ const AnswerSchema = new Schema({
     default: new Date(),
   },
 
+  edited: {
+    type: Boolean,
+    default: false,
+  },
+
   user: {
     type: Schema.Types.ObjectId,
     ref: 'UserEmail',
@@ -20,8 +25,13 @@ const AnswerSchema = new Schema({
   },
 
   likes: {
-    type:Number,
-    default: 0,
+    type: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'UserEmail',
+      }
+    ],
+    default: [],
   },
 
   question: {

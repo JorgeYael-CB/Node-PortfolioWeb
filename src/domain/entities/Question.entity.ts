@@ -13,6 +13,8 @@ export class QuestionEntity {
     public user:UserEmailEntity,
     public answers: AnswerEntity[],
     public likes: UserEmailEntity[],
+    public stars: number,
+    public edited: boolean,
   ){};
 
 }

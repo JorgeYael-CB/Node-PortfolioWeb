@@ -35,6 +35,11 @@ const userEmailSchema = new Schema({
     enum: ['ADMIN', 'USER', 'SUPER_USER', 'DEVELOPER'],
   },
 
+  img: {
+    type: String,
+    default: '',
+  },
+
   questions: {
     type: [
       {

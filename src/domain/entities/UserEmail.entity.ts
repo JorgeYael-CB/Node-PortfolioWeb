@@ -12,7 +12,8 @@ export class UserEmailEntity {
     public readonly date: Date,
     public roles: string[],
     public questions: QuestionEntity[],
-    public readonly name:string
+    public readonly name:string,
+    public readonly img:string,
   ){};
 
 }
