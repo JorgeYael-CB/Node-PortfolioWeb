@@ -12,9 +12,15 @@ export class AnswerDatasourceMongoImpl implements AnswerDatasource {
   constructor(){}
 
 
+  removeLikeAnswer(getAnswerByDto: GetAnswerByDto): Promise<AnswerEntity> {
+    throw new Error("Method not implemented.");
+  }
+
+
   addLikeAnswer(getAnswerByDto: GetAnswerByDto): Promise<AnswerEntity> {
     throw new Error("Method not implemented.");
   };
+
 
   private async answerPopulate( id: any ) {
     if( !isValidObjectId( id ) ) throw CustomError.BadRequestException(`id: "${id}" is not valid`)

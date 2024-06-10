@@ -11,5 +11,6 @@ export abstract class AnswerDatasource {
   abstract editAnswer( editAnswerDto: EditAnswerDto ): Promise<void>;
   abstract getAllAnswer():Promise<AnswerEntity[]>;
   abstract addLikeAnswer( getAnswerByDto: GetAnswerByDto ):Promise< AnswerEntity >;
+  abstract removeLikeAnswer( getAnswerByDto: GetAnswerByDto ):Promise< AnswerEntity >;
 
 }
