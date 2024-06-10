@@ -41,7 +41,7 @@ export class PaginationDto {
       throw CustomError.BadRequestException(`limit and page they must be positive numbers`);
 
     const pagination = page * limit;
-    const maxPage = Math.round( numberElements / limit );
+    const maxPage = Math.floor( numberElements / limit );
     const minPage = 0;
 
     const arrayPagination = array.slice( pagination, pagination + limit );
