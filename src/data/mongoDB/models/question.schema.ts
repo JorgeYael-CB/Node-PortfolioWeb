@@ -24,6 +24,11 @@ const QuestionSchema = new Schema({
     required: true,
   },
 
+  likes: {
+    type:Number,
+    default: 0,
+  },
+
   answers: {
     type: [
       {

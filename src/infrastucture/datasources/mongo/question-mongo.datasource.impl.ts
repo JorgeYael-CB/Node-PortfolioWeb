@@ -24,19 +24,16 @@ export class QuestionMongoDatasourceImpl implements QuestionDatasource {
     private async getQuestionPopulate( questionId: any ):Promise< QuestionEntity > {
         if( !isValidObjectId( questionId )) throw CustomError.BadRequestException(`ID is not valid`);
 
-        const question = await QuestionModel.findById( questionId ).populate('user', {
-            email: 1,
-            verify: 1,
-            isActive: 1,
-            date: 1,
-            roles: 1,
-            name: 1,
-        }).populate('answers', {
-            answer: 1,
-            date: 1,
-            user: 1,
-            question: 1,
-        });
+        const question = await QuestionModel.findById(questionId)
+            .populate({
+                path: 'user',
+                select: 'email verify isActive date roles name'
+            })
+            .populate({
+                path: 'answers',
+                select: 'answer date user',
+                populate: {path: 'user', select: 'email verify isActive date roles name'},
+            })
 
         if( !question ) throw CustomError.BadRequestException(`Question not found`);
 

@@ -19,6 +19,11 @@ const AnswerSchema = new Schema({
     required: true,
   },
 
+  likes: {
+    type:Number,
+    default: 0,
+  },
+
   question: {
     type: Schema.Types.ObjectId,
     ref: 'Question',
