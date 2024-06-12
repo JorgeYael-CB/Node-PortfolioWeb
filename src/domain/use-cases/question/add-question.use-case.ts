@@ -22,11 +22,11 @@ export class AddQuestionUseCase {
     this.mailerAdaper.send({
       subject: `Nueva pregunta en DevComplete Studios`,
       html: `
-        <h1>Nueva pregunta en <a href="https://devcomplete-studios.com/">DevComplete Studios</a> </h1>
+        <h1>Nueva pregunta en <a href="https://devcompletestudios.com/">DevComplete Studios</a> </h1>
         <p>Nombre del usuario: <strong>${newQuestion.user.name}</strong></p>
         <p>Título de la pregunta: <strong>${newQuestion.title}</strong></p>
         <p>Pregunta realizada: <strong>${newQuestion.question}</strong></p>
-        <p>Si quieres ver las preguntas puedes verlas en el siguiente enlace: <a href="https://devcomplete-studios.com/">DevComplete Studios</a> </p>
+        <p>Si quieres ver las preguntas puedes verlas en el siguiente enlace: <a href="https://devcompletestudios.com/">DevComplete Studios</a> </p>
       `,
       to: this.adminUsers,
     })

@@ -14,16 +14,22 @@ export class AddAnswerUseCase{
 
   async add( addAnswerDto:AddAnswerDto ) {
     const answer = await this.answerRepository.addAnswer( addAnswerDto );
-    // if( !answer || answer.user || answer.question.user ) throw CustomError.InternalServerError(`answer not found!: ${answer}`, {error: true, message: 'Hay un error en la respuesta, no vienen todos los datos'})
+    if( !answer ) throw CustomError.InternalServerError(`No viene la respuesta al querer agregarla`, {file: __dirname});
+
 
     this.mailerAdapter.send({
       html: `
         <h1>Answer to your question at DevComplete Studios.</h1>
-        <p>user "${answer.user.name}" answered your question: <strong> ${answer.question.question.slice(0, answer.question.question.length / 2)}...</strong> </p>
-        <p>You can see the following answer on the <a href="https://devcomplete-studios.com/">DevComplete Studios</a> page.</p>
+        <p>Hi, "${answer.question.user.name}", The ${ answer.user.roles.includes('ADMIN')? 'Admin': 'User' } "${answer.user.name}" answered your question</p>
+
+        <p>${answer.question.user.name}: <strong>${answer.question.question}</strong> </p>
+        <p>${answer.user.name}: <strong>${answer.answer}</strong> </p>
+        <p> Date: ${ answer.date.getTime() } </p>
+
+        <p>You can see the following answer on the <a href="https://devcompletestudios.com/">DevComplete Studios page.</a></p>
       `,
       subject: `
-        Hi, ${answer.question.user.name}, answer to your question
+        Answer to your question in DevComplete Studios
       `,
       to: answer.question.user.email,
     });
