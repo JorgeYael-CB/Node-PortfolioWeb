@@ -81,8 +81,8 @@ export class QuestionMongoDatasourceImpl implements QuestionDatasource {
             })
             .populate({
                 path: 'answers',
-                select: 'answer date user',
-                populate: {path: 'user', select: userData},
+                select: 'answer date user likes',
+                populate: [{path: 'user', select: userData}, {path: 'likes', select: userData}],
             })
             .populate({
                 path: 'likes',

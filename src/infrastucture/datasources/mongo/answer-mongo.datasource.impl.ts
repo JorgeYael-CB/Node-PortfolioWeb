@@ -91,8 +91,8 @@ export class AnswerDatasourceMongoImpl implements AnswerDatasource {
 
     const user = await UserEmailModel.findById(userId);
 
-    if( !user ||  !user.roles.includes('ADMIN') ){
-      throw CustomError.BadRequestException(`Currently only admins can add reply.`);
+    if( !user ){
+      throw CustomError.BadRequestException(`Oops! error - contact support`);
     }
 
     const newAnswer = await AnswerModel.create({
